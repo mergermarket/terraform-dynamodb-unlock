@@ -31,25 +31,23 @@ pipeline {
     )
   }
   stages {
-      stage('Delete Terraform lock') {
-          steps {
-            node {
-               withCredentials([usernamePassword(credentialsId: 'aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) { 
-                sh '''
-                  docker pull mergermarket/terraform-dynamodb-unlock"
-                  docker run -i \
-                      -e $AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN \
-                      mergermarket/terraform-dynamodb-unlock \
-                        --account ${params.Account} \
-                        --role ${params.Role} \
-                        --region ${params.Region} \
-                        --role-session-name "$JOB_NAME" \
-                        --service ${params.Service} \
-                        --lock-id ${params.LockID}
-                  '''
-              }
-            }
-          }
+    stage('Delete Terraform lock') {
+      steps {
+        withCredentials([usernamePassword(credentialsId: 'aws-credentials', passwordVariable: 'AWS_SECRET_ACCESS_KEY', usernameVariable: 'AWS_ACCESS_KEY_ID')]) { 
+        sh '''
+          docker pull mergermarket/terraform-dynamodb-unlock"
+          docker run -i \
+              -e $AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN \
+              mergermarket/terraform-dynamodb-unlock \
+                --account ${params.Account} \
+                --role ${params.Role} \
+                --region ${params.Region} \
+                --role-session-name "$JOB_NAME" \
+                --service ${params.Service} \
+                --lock-id ${params.LockID}
+          '''
+        }               
       }
+    }
   }
 }
