@@ -28,7 +28,7 @@ You can take the ID from the output and pass it to this docker container.
             --role admin \
             --region eu-west-1 \
             --role-session-name "$JOB_NAME" \
-            --service some-random-service-name
+            --service some-random-service-name \
             --lock-id 77b2f12e-7a06-7448-b206-8538cda19710
 
 ## Options
@@ -37,5 +37,5 @@ You can take the ID from the output and pass it to this docker container.
 * `--role` - name of the role to assume (required).
 * `--role-session-name` - session name for the role, so it's easy to identify who did this (required, unless called from an assumed role already).
 * `--region` - region where the service is running (required unless `AWS_DEFAULT_REGION` is passed).
-* `--service` - name of the service to redeploy (required).
+* `--service` - name of the service to which has the lock.
 * `--lock-id` - ID of the lock to be removed. (required).
