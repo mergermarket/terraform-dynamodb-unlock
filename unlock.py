@@ -98,7 +98,7 @@ lock_key_items = dynamodb.scan(
 
 if len(lock_key_items) != 1:
     print('A single lock ID could not be found.')
-    sys.exit()
+    sys.exit(1)
 
 lock_key = lock_key_items[0]['LockID']['S']
 print(f'Deleting lock with lock ID {lock_key}...', file=sys.stderr)
