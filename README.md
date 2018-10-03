@@ -22,7 +22,7 @@ You can take the ID from the output and pass it to this docker container.
 
     docker pull mergermarket/terraform-dynamodb-unlock
     docker run -i \
-        -e AWS_ACCESS_KEY_ID -e AWS_SECRET_ACCESS_KEY -e AWS_SESSION_TOKEN \
+        -e $AWS_ACCESS_KEY_ID -e $AWS_SECRET_ACCESS_KEY \
         mergermarket/terraform-dynamodb-unlock \
             --account myaccount \
             --role admin \
