@@ -5,12 +5,12 @@ import boto3
 
 TERRAFORM_LOCKS_TABLE_NAME = 'terraform_locks'
 
-parser = argparse.ArgumentParser(description='Redeploy an ECS service')
+parser = argparse.ArgumentParser(description='Unlock a terraform state lock')
 parser.add_argument(
     '--account', required=True, help='The account to assume the role in'
 )
 parser.add_argument(
-    '--role', default='admin', help='The account to assume the role in'
+    '--role', default='admin', help='The role to assume in the account'
 )
 parser.add_argument(
     '--role-session-name', default=None,
@@ -97,7 +97,7 @@ lock_key_items = dynamodb.scan(
 )['Items']
 
 if len(lock_key_items) != 1:
-    print('A single lock ID could not be found.')
+    print('A single lock ID could not be found.', file=sys.stderr)
     sys.exit(1)
 
 lock_key = lock_key_items[0]['LockID']['S']
