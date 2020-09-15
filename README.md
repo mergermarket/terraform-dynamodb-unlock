@@ -39,3 +39,4 @@ You can take the ID from the output and pass it to this docker container.
 * `--region` - region where the service is running (required unless `AWS_DEFAULT_REGION` is passed).
 * `--service` - name of the service to which has the lock.
 * `--lock-id` - ID of the lock to be removed. (required).
+* `--team` - Name of your team. (Required only for projects using acurisrelease account)
