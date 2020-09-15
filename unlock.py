@@ -21,6 +21,7 @@ parser.add_argument('--service', required=True, help='The ECS service')
 parser.add_argument(
     '--lock-id', required=True, help='The ID of the lock to be removed'
 )
+parser.add_argument('--team', help='The ID of the lock to be removed')
 args = parser.parse_args()
 
 session = boto3.Session()
@@ -75,6 +76,11 @@ dynamodb = boto3.client(
     aws_session_token=credentials['SessionToken'],
     region_name=args.region
 )
+
+if args.team is not None and \
+    "-deploy" in args.role:
+    TERRAFORM_LOCKS_TABLE_NAME = args.team + "-tflocks"
+
 
 print(f'Identifying lock for {args.service}...', file=sys.stderr)
 lock_key_items = dynamodb.scan(
