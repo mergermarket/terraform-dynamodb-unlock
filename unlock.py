@@ -77,8 +77,8 @@ dynamodb = boto3.client(
     region_name=args.region
 )
 
-if args.account == "acurisrelease" and \
-    args.team is not None:
+if (args.account == "acurisrelease" and args.team is not None) and \
+    (args.account == "acurisrelease" and args.team is not ""):
     TERRAFORM_LOCKS_TABLE_NAME = args.team + "-tflocks"
 
 
